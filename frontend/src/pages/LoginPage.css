@@ -1,0 +1,19 @@
+/* LoginPage.css */
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Altura da tela inteira */
+    background-color: #f4f4f4; /* Cor de fundo opcional */
+}
+
+.login-card {
+    padding: 2rem; /* Espaçamento interno do card */
+    width: 300px; /* Largura fixa do card */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra para o card */
+}
+
+.error-message {
+    color: red;
+    margin-bottom: 1rem; /* Espaçamento inferior para a mensagem de erro */
+}

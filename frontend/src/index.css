@@ -1,0 +1,33 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* { 
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Roboto", serif;
+}
+
+body {
+  min-height: 100vh;
+  width: 100vw;
+  background: linear-gradient(180deg, #F4EDE2 0%, rgba(244, 237, 226, 0.904) 100%);
+  overflow: hidden;
+}
+
+.app-container {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* Sidebar */
+.sidebar {
+  background-color: #f8f9fa;
+  transition: width 0.3s;
+}
+
+/* Conteúdo principal com espaçamento baseado no estado */
+.main-content {
+  transition: margin-left 0.3s;
+}
