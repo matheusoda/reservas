@@ -1,5 +1,7 @@
 // prisma/seed.ts
 import { PrismaClient } from "@prisma/client";
+import { randomUUID } from "crypto";
+import { encrypt } from "../src/utils";
 
 const prisma = new PrismaClient();
 
@@ -27,7 +29,54 @@ const mesas = [
     { id: 8, name: "Mesa 8" }
 ];
 
+const users = [
+    {
+        name: "Usuario",
+        email: "usuario@mail.com",
+        password: "12345678",
+        phone: "12312312345",
+        isAdmin: false
+    },
+    {
+        name: "Usuario1",
+        email: "usuario1@mail.com",
+        password: "12345678",
+        phone: "12312312345",
+        isAdmin: false
+    },
+    {
+        name: "Usuario2",
+        email: "usuario2@mail.com",
+        password: "12345678",
+        phone: "12312312345",
+        isAdmin: false
+    }
+];
+
 async function main() {
+    for (const user of users) {
+        const existingCategory = await prisma.user.findUnique({
+            where: { email: user.email }
+        });
+
+        const passwordEncrypted = encrypt(user.password);
+        if (!existingCategory) {
+            await prisma.user.create({
+                data: {
+                    id: randomUUID(),
+                    name: user.name,
+                    email: user.email,
+                    phone: user.phone,
+                    isAdmin: user.isAdmin,
+                    password: passwordEncrypted
+                }
+            });
+            console.log(`Categoria '${user.name}' criada.`);
+        } else {
+            console.log(`Categoria '${user.name}' já existe.`);
+        }
+    }
+
     for (const category of categorias) {
         const existingCategory = await prisma.category.findUnique({
             where: { name: category.name }
