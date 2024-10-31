@@ -11,7 +11,9 @@ import {
 import {
     getReservations,
     createReservation,
-    getReservationsByUser
+    getReservationsByUser,
+    updateReservation,
+    deleteReservation
 } from "../controllers/reservationController";
 
 import {
@@ -23,6 +25,7 @@ import {
 
 import {
     createCategoryMenu,
+    deleteCategoryMenu,
     getCategoryMenus,
     updateCategoryMenu
 } from "../controllers/categoryMenuController";
@@ -50,20 +53,20 @@ router.delete("/users/:id", deleteUser);
 router.get("/reservations", getReservations);
 router.get("/reservations/user/:userId", getReservationsByUser);
 router.post("/reservations", createReservation);
-router.put("/users/:id", updateUser);
-router.delete("/users/:id", deleteUser);
+router.put("/reservations/:id", updateReservation);
+router.delete("/reservations/:id", deleteReservation);
 
 // Rotas de cardapio
-router.get("/menu", getMenus);
-router.post("/menu", createMenu);
-router.put("/users/:id", updateMenu);
-router.delete("/users/:id", deleteMenu);
+router.get("/menus", getMenus);
+router.post("/menus", createMenu);
+router.put("/menus/:id", updateMenu);
+router.delete("/menus/:id", deleteMenu);
 
 // Rotas de catergoria de cardapio
 router.get("/categoryMenu", getCategoryMenus);
 router.post("/categoryMenu", createCategoryMenu);
 router.put("/categoryMenu/:id", updateCategoryMenu);
-router.delete("/categoryMenu/:id", deleteUser);
+router.delete("/categoryMenu/:id", deleteCategoryMenu);
 
 // Rotas de mesas
 router.get("/tables", getTables);

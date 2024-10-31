@@ -1,0 +1,21 @@
+.table-scroll {
+    max-height: 300px; /* Ajuste conforme necessário */
+    overflow-y: auto; /* Permite rolagem vertical */
+    margin-top: 10px; /* Espaço entre o título e a tabela */
+    border: 1px solid #ccc; /* Opcional: adiciona uma borda */
+    padding: 5px; /* Opcional: adiciona preenchimento */
+}
+
+.field {
+    margin-bottom: 1.5rem;
+}
+
+.error-message {
+    color: red;
+    margin-bottom: 1rem;
+}
+
+.success-message {
+    color: green;
+    margin-bottom: 1rem;
+}

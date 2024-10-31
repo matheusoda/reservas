@@ -14,11 +14,18 @@ import ReservationPage from './pages/ReservationPage.tsx'
 import NotFoundPage from './pages/NotFoundPage.tsx'
 import HomePage from './pages/HomePage.tsx';
 import { AuthProvider, useAuth } from './context/AuthContext.tsx';
+import ConfigurationPage from './pages/Configuration.tsx';
 
 function RedirectIfLoggedIn({ to }: { to: string }) {
   const { isAuthenticated } = useAuth();
 
   return isAuthenticated ? <Navigate to={to} /> : null;
+};
+
+function AdminRoute ({ element }: { element: JSX.Element }) {
+  const { isAdmin } = useAuth();
+  console.log(isAdmin)
+  return isAdmin ? element : <Navigate to="/" />; // Redireciona para a raiz se não for admin
 };
 
 
@@ -43,6 +50,10 @@ const router = createBrowserRouter([
       {
         path: '/menu',
         element: <MenuPage />,
+      },
+      {
+        path: '/configuracao',
+        element: <AdminRoute element={<ConfigurationPage />} />,
       },
       {
         path: '/login', // Rota para a página de login

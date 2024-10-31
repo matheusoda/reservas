@@ -14,7 +14,7 @@ export const fetchCategories = async () => {
 
 // Função para buscar itens do menu
 export const fetchMenuItems = async () => {
-    const response = await api.get("/menu");
+    const response = await api.get("/menus");
     return response.data;
 };
 
@@ -27,6 +27,12 @@ export const fetchTables = async () => {
 // Função para buscar mesas cadastradas
 export const fetchReservations = async () => {
     const response = await api.get("/reservations/user/");
+    return response.data;
+};
+
+// Função para buscar usuarios
+export const fetchUser = async () => {
+    const response = await api.get("/users");
     return response.data;
 };
 

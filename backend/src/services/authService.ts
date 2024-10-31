@@ -28,7 +28,7 @@ const authService = {
             expiresIn: "1h"
         });
 
-        return { token, userId: user.id };
+        return { token, userId: user.id, isAdmin: user.isAdmin };
     }
 };
 

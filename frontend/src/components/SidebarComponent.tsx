@@ -116,6 +116,32 @@ export default function SidebarComponent({ children }: { children: React.ReactNo
                                             {expanded && <span className="font-medium">Reservas</span>}
                                         </a>
                                     </li>
+                                    <li>
+                                        <Tooltip target=".custom-target-reserva" />
+                                        <a
+                                            data-pr-tooltip={expanded ? "" : "Configurações"}
+                                            data-pr-position="right"
+                                            data-pr-my="left center-2"
+                                            onClick={() => navigate('/configuracao')}
+                                            className="
+                                                custom-target-reserva
+                                                p-ripple 
+                                                flex 
+                                                align-items-center 
+                                                cursor-pointer 
+                                                p-3 
+                                                border-round 
+                                                text-700 
+                                                hover:surface-100 
+                                                transition-duration-150 
+                                                transition-colors 
+                                                w-full
+                                            "
+                                        >
+                                            <i className="pi pi-calendar-clock mr-2 mt-[0.15rem]"></i>
+                                            {expanded && <span className="font-medium">Configurações</span>}
+                                        </a>
+                                    </li>
                                 </ul>
                             </li>
                         </ul>

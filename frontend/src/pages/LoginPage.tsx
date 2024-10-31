@@ -20,10 +20,10 @@ export default function LoginPage() {
                 password,
             });
 
-            const { token, userId } = response.data.data;
-            login(token, userId); 
+            const { token, userId, isAdmin } = response.data.data;
+            login(token, userId, isAdmin); 
 
-            // window.location.href = '/';
+            window.location.href = '/';
         } catch (error) {
             setErrorMessage('Credenciais inválidas');
             console.error('Erro no login:', error);

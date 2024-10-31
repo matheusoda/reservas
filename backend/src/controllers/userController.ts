@@ -55,7 +55,7 @@ export async function updateUser(req: Request, res: Response) {
     const { name, email, phone, password } = req.body;
 
     try {
-        const validation = userSchema.safeParse(req.body);
+        const validation = userUpdateSchema.safeParse(req.body);
 
         if (!validation.success) {
             res.status(400).json({
@@ -97,5 +97,11 @@ const userSchema = z.object({
     name: z.string().min(2, "O nome precisa ter pelo menos 2 caracteres."),
     email: z.string().email("Formato de e-mail inválido."),
     password: z.string().min(8, "A senha precisa ter pelo menos 8 caracteres."),
+    phone: z.string().optional()
+});
+
+const userUpdateSchema = z.object({
+    name: z.string().min(2, "O nome precisa ter pelo menos 2 caracteres."),
+    email: z.string().email("Formato de e-mail inválido."),
     phone: z.string().optional()
 });

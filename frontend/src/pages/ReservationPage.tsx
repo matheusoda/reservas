@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Button } from 'primereact/button';
 import { Calendar } from 'primereact/calendar';
 import { Dropdown } from 'primereact/dropdown';
@@ -8,8 +8,10 @@ import { Card } from 'primereact/card';
 import { fetchTables } from '../api';
 import { Table } from '../types';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 export default function  ReservationForm() {
+    const navigate = useNavigate();
     const [date, setDate] = useState<Date | null>(null);
     const [time, setTime] = useState('');
     const [numberOfPeople, setNumberOfPeople] = useState<number | null>(1);
@@ -38,8 +40,7 @@ export default function  ReservationForm() {
         loadData();
     }, []);
 
-    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
+    const handleSubmit = async () => {
         setIsSubmitting(true); 
 
         const formattedDateTime = date ? new Date(date) : null;
@@ -65,6 +66,7 @@ export default function  ReservationForm() {
                 }
 
                 // Aqui você pode adicionar lógica para lidar com a resposta
+                navigate('/')
                 console.log('Reserva criada com sucesso:', response.data);
             } catch (error) {
                 console.error('Erro ao criar reserva:', error);
@@ -78,14 +80,13 @@ export default function  ReservationForm() {
     };
 
     return (
-        <Card>
-
-            <div className="reservation-form p-4">
-                <h2>Reservar Mesa</h2>
+        <Card className="py-4 px-2">
+            <div className="reservation-form ">
+                <p className='text-2xl font-semibold'>Reservar Mesa</p>
                 {loading ? (
                     <ProgressSpinner />
                 ) : (
-                    <form onSubmit={handleSubmit}>
+                    <form onSubmit={handleSubmit} className='px-3 pt-3'>
                         <div className="field">
                             <label htmlFor="date">Data</label>
                             <Calendar
@@ -95,7 +96,7 @@ export default function  ReservationForm() {
                                 dateFormat="mm/dd/yy"
                                 showIcon
                                 placeholder='Selecione uma data'
-
+                                inputClassName='ml-36'
                             />
                         </div>
 
@@ -106,6 +107,7 @@ export default function  ReservationForm() {
                                 id="time"
                                 value={time}
                                 onChange={(e) => setTime(e.target.value)}
+                                className='ml-36'
                             />
                         </div>
 
@@ -116,6 +118,7 @@ export default function  ReservationForm() {
                                 value={numberOfPeople}
                                 onValueChange={(e) => setNumberOfPeople(e.value ?? 1)}
                                 min={1}
+                                className='ml-10'
                             />
                         </div>
 
@@ -128,10 +131,10 @@ export default function  ReservationForm() {
                                 onChange={(e) => setSelectedTable(e.value)}
                                 optionLabel="name"
                                 placeholder="Selecione uma mesa"
+                                className='ml-10'
                             />
                         </div>
-
-                        <Button type="submit" label={isSubmitting ? 'Reservando...' : 'Reservar'} disabled={isSubmitting} />
+                        <Button className='mt-4 px-2 py-1 bg-green-300' type="submit" label={isSubmitting ? 'Reservando...' : 'Reservar'} disabled={isSubmitting} />
                     </form>
                 )}
             </div>

@@ -27,27 +27,29 @@ export default function Home() {
     }, [userId]);
 
     return (
-        <div className="home">
-            <h2>Minhas Reservas</h2>
-            {loading ? (
-                <ProgressSpinner />
-            ) : (
-                <div>
-                    {reservations.length === 0 ? (
-                        <p>Você não tem reservas.</p>
-                    ) : (
-                        reservations.map((reservation: Reservation) => (
-                            <Card key={reservation.id} className="mb-3">
-                                <h4>Mesa: {reservation.tableId}</h4>
-                                <p>Data: {new Date(reservation.date).toLocaleDateString()}</p>
-                                <p>Hora: {new Date(reservation.date).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</p>
-                                {/* <p>Número de pessoas: {reservation.numberOfPeople}</p> */}
-                            </Card>
-                        ))
-                    )}
-                </div>
-            )}
-        </div>
+        <Card className="py-4 px-2">
+            <div className="home">
+                <p className='text-2xl font-semibold'>Minhas Reservas</p>
+                {loading ? (
+                    <ProgressSpinner />
+                ) : (
+                    <div className='px-3 pt-3'>
+                        {reservations.length === 0 ? (
+                            <p>Você não tem reservas.</p>
+                        ) : (
+                            reservations.map((reservation: Reservation) => (
+                                <Card key={reservation.id} className="px-2 pt-1 mb-3">
+                                    <h4>Mesa: {reservation.tableId}</h4>
+                                    <p>Data: {new Date(reservation.date).toLocaleDateString()}</p>
+                                    <p>Hora: {new Date(reservation.date).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</p>
+                                    {/* <p>Número de pessoas: {reservation.numberOfPeople}</p> */}
+                                </Card>
+                            ))
+                        )}
+                    </div>
+                )}
+            </div>
+        </Card>
     );
 };
 
