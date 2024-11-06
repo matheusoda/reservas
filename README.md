@@ -46,6 +46,14 @@ cd reservas
 
 ### 2. Instale dependências de back-end 
 
+Criar arquivo .env na pasta backend, e nela colocar as seguintes variáveis com os dados correspondentes.
+
+```bash
+DATABASE_URL="postgresql://postgres:password@db:5432/meubanco"
+PORT=5000
+JWT_SECRET="a244262e7e94c78fe911322cacde31da36ba10bb7cdd9d13c469fe9e3f6a56cc"
+```
+
 Acesse a pasta backend e execute o comando:
 ```bash
 npm install
@@ -66,6 +74,12 @@ npm run seed
 acesse a pasta frontend
 ```bash
 npm install
+```
+
+### 4. Executando docker
+
+```bash
+docker-compose up --build
 ```
 
 ## Uso
