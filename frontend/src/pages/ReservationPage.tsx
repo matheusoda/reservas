@@ -9,9 +9,11 @@ import { fetchTables } from '../api';
 import { Table } from '../types';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 
 export default function  ReservationForm() {
     const navigate = useNavigate();
+    const { userId } = useAuth();
     const [date, setDate] = useState<Date | null>(null);
     const [time, setTime] = useState('');
     const [numberOfPeople, setNumberOfPeople] = useState<number | null>(1);
@@ -50,7 +52,7 @@ export default function  ReservationForm() {
 
             const reservationData = {
                 tableId: selectedTable?.id,
-                userId: 'd96fdcba-31f4-4b7d-b245-f0e66710b13b', 
+                userId: userId, 
                 date: formattedDateTime.toISOString(),
             };
 
@@ -67,7 +69,6 @@ export default function  ReservationForm() {
 
                 // Aqui você pode adicionar lógica para lidar com a resposta
                 navigate('/')
-                console.log('Reserva criada com sucesso:', response.data);
             } catch (error) {
                 console.error('Erro ao criar reserva:', error);
             } finally {
@@ -82,7 +83,7 @@ export default function  ReservationForm() {
     return (
         <Card className="py-4 px-2">
             <div className="reservation-form ">
-                <p className='text-2xl font-semibold'>Reservar Mesa</p>
+                <p className='text-3xl font-semibold'>Reservar Mesa</p>
                 {loading ? (
                     <ProgressSpinner />
                 ) : (

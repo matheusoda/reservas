@@ -1,0 +1,26 @@
+.register-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Ajusta a altura para ocupar toda a tela */
+    background-color: #f9f9f9; /* Cor de fundo */
+}
+
+.register-card {
+    width: 400px; /* Ajuste a largura conforme necessário */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.field {
+    margin-bottom: 1.5rem; /* Espaçamento entre os campos */
+}
+
+.error-message {
+    color: red; /* Estilo para a mensagem de erro */
+    margin-bottom: 1rem;
+}
+
+.success-message {
+    color: green; /* Estilo para a mensagem de sucesso */
+    margin-bottom: 1rem;
+}

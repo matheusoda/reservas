@@ -34,9 +34,11 @@ export default function ConfigurationPage() {
     ]);
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+        setErrorMessage('')
+        setSuccessMessage('');
         event.preventDefault();
         const userData = { name, email, password, phone, isAdmin };
-        const menuData = { name, description, price, categoryId };
+        const menuData = { name, description, price, category: categoryId };
         const categoryData = { name };
         let response
         try {
@@ -72,8 +74,8 @@ export default function ConfigurationPage() {
                }
             }
 
-            console.log('Dados enviados com sucesso:', response);
             resetForm();
+            return response;
         } catch (error) {
             setErrorMessage('Erro ao cadastrar. Tente novamente.');
             console.error('Erro no cadastro:', error);
@@ -89,7 +91,9 @@ export default function ConfigurationPage() {
         setDescription('');
         setPrice('');
         setCategoryId('');
-        setId('')
+        setId('');
+        setErrorMessage('');
+        setSuccessMessage('');
     };
 
     const fetchCategories = async () => {
@@ -162,14 +166,16 @@ export default function ConfigurationPage() {
     };
 
     function handleResetFields() {
-        setName('')
-        setEmail('')
-        setPassword('')
-        setPhone('')
-        setIsAdmin(false)
-        setDescription('')
-        setPrice('')
-        setCategoryId('')
+        setName('');
+        setEmail('');
+        setPassword('');
+        setPhone('');
+        setIsAdmin(false);
+        setDescription('');
+        setPrice('');
+        setCategoryId('');
+        setErrorMessage('');
+        setSuccessMessage('');
     }
 
     return (
@@ -196,11 +202,11 @@ export default function ConfigurationPage() {
                         <form onSubmit={handleSubmit}>
                             <div className="field">
                                 <label htmlFor="name">Nome</label>
-                                <InputText id="name" value={name} onChange={(e) => setName(e.target.value)} className='ml-10'/>
+                                <InputText id="name" value={name} onChange={(e) => setName(e.target.value)} className='ml-10' required/>
                             </div>
                             <div className="field">
                                 <label htmlFor="email">Email</label>
-                                <InputText id="email" value={email} onChange={(e) => setEmail(e.target.value)} className='ml-10'/>
+                                <InputText id="email" value={email} onChange={(e) => setEmail(e.target.value)} className='ml-10' required/>
                             </div>
                             <div className="field">
                                 <label htmlFor="phone">Telefone</label>
@@ -222,17 +228,14 @@ export default function ConfigurationPage() {
                         </form>
                         <hr className='mt-2' />
                         <h3 className="mt-4 text-lg font-semibold">Usuários Cadastrados</h3> 
-                        <div className="table-scroll">
-                            <DataTable value={users} paginator rows={6}>
-                                <Column field="name" header="Nome" />
-                                <Column field="email" header="Email" />
-                                <Column field="phone" header="Telefone" />
-                                <Column header="Ações" body={(rowData) => (
-                                    <Button className='mt-4 px-2 py-1 bg-green-300' label="Editar" onClick={() => handleEdit(rowData)} />
-                                )} />
-                            </DataTable>
-
-                        </div>
+                        <DataTable value={users} paginator rows={6}>
+                            <Column field="name" header="Nome" />
+                            <Column field="email" header="Email" />
+                            <Column field="phone" header="Telefone" />
+                            <Column header="Ações" body={(rowData) => (
+                                <Button className='mt-4 px-2 py-1 bg-green-300' label="Editar" onClick={() => handleEdit(rowData)} />
+                            )} />
+                        </DataTable>
                     </>
                 )}
 
@@ -241,15 +244,15 @@ export default function ConfigurationPage() {
                         <form onSubmit={handleSubmit}>
                             <div className="field">
                                 <label htmlFor="name">Nome do Menu</label>
-                                <InputText id="name" value={name} onChange={(e) => setName(e.target.value)} className='ml-3'/>
+                                <InputText id="name" value={name} onChange={(e) => setName(e.target.value)} className='ml-3' required/>
                             </div>
                             <div className="field">
                                 <label htmlFor="description">Descrição</label>
-                                <InputText id="description" value={description} onChange={(e) => setDescription(e.target.value)} className='ml-12'/>
+                                <InputText id="description" value={description} onChange={(e) => setDescription(e.target.value)} className='ml-12' required/>
                             </div>
                             <div className="field">
                                 <label htmlFor="price">Preço</label>
-                                <InputText id="price" value={price} onChange={(e) => setPrice(e.target.value)} className='ml-20'/>
+                                <InputText id="price" value={price} onChange={(e) => setPrice(e.target.value)} className='ml-20' required/>
                             </div>
                             <div className="field">
                                 <label htmlFor="categoryId">Categoria</label>
@@ -261,25 +264,24 @@ export default function ConfigurationPage() {
                                     optionLabel="name"
                                     placeholder="Selecionar Categoria"
                                     className='ml-12'
+                                    required
                                 />
                             </div>
                             <Button className='mt-4 px-2 py-1 bg-green-300' type="submit" label={name ? 'Editar' : 'Cadastrar'} />
                         </form>
                         <hr className='mt-2' />
                         <h3 className="mt-4 text-lg font-semibold">Itens do Menu Cadastrados</h3>
-                        <div className="table-scroll">
-                            <DataTable value={menuItems} paginator rows={6}>
-                                <Column field="name" header="Nome" />
-                                <Column field="description" header="Descrição" />
-                                <Column field="price" header="Preço" />
-                                <Column header="Categoria" body={(rowData) => (
-                                    <span>{categories.find(cat => cat.id === rowData.categoryId)?.name}</span>
-                                )} />
-                                <Column header="Ações" body={(rowData) => (
-                                    <Button className='mt-4 px-2 py-1 bg-green-300' label="Editar" onClick={() => handleEdit(rowData)} />
-                                )} />
-                            </DataTable>
-                        </div>
+                        <DataTable value={menuItems} paginator rows={6}>
+                            <Column field="name" header="Nome" />
+                            <Column field="description" header="Descrição" />
+                            <Column field="price" header="Preço" />
+                            <Column header="Categoria" body={(rowData) => (
+                                <span>{categories.find(cat => cat.id === rowData.categoryId)?.name}</span>
+                            )} />
+                            <Column header="Ações" body={(rowData) => (
+                                <Button className='mt-4 px-2 py-1 bg-green-300' label="Editar" onClick={() => handleEdit(rowData)} />
+                            )} />
+                        </DataTable>
                     </>
                 )}
 
@@ -294,14 +296,12 @@ export default function ConfigurationPage() {
                         </form>
                         <hr className='mt-2'/>
                         <h3 className="mt-4 text-lg font-semibold">Categorias Cadastradas</h3>
-                        <div className="table-scroll">
-                            <DataTable value={categories} paginator rows={10}>
-                                <Column field="name" header="Nome" />
-                                <Column header="Ações" body={(rowData) => (
-                                    <Button className='mt-4 px-2 py-1 bg-green-300' label="Editar" onClick={() => handleEdit(rowData)} />
-                                )} />
-                            </DataTable>
-                        </div>
+                        <DataTable value={categories} paginator rows={10}>
+                            <Column field="name" header="Nome" />
+                            <Column header="Ações" body={(rowData) => (
+                                <Button className='mt-4 px-2 py-1 bg-green-300' label="Editar" onClick={() => handleEdit(rowData)} />
+                            )} />
+                        </DataTable>
                     </>
                 )}
 
@@ -316,14 +316,12 @@ export default function ConfigurationPage() {
                         </form>
                         <hr className='mt-2'/>
                         <h3 className="mt-4 text-lg font-semibold">Mesas Cadastradas</h3>
-                        <div className="table-scroll">
-                            <DataTable value={tables} paginator rows={10}>
-                                <Column field="name" header="Nome" />
-                                <Column header="Ações" body={(rowData) => (
-                                    <Button className='mt-4 px-2 py-1 bg-green-300' label="Editar" onClick={() => handleEdit(rowData)} />
-                                )} />
-                            </DataTable>
-                        </div>
+                        <DataTable value={tables} paginator rows={10}>
+                            <Column field="name" header="Nome" />
+                            <Column header="Ações" body={(rowData) => (
+                                <Button className='mt-4 px-2 py-1 bg-green-300' label="Editar" onClick={() => handleEdit(rowData)} />
+                            )} />
+                        </DataTable>
                     </>
                 )}
             </Card>

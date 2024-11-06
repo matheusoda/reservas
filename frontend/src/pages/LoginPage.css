@@ -4,12 +4,16 @@
     justify-content: center;
     align-items: center;
     height: 100vh; /* Altura da tela inteira */
-    background-color: #f4f4f4; /* Cor de fundo opcional */
+    /* background-color: #f4f4f4; Cor de fundo opcional */
+    background-image: url('../assets/loginImage.png');
+    background-size: 100% auto;  
+    background-repeat: no-repeat;
+    background-position: center;
 }
 
 .login-card {
-    padding: 2rem; /* Espaçamento interno do card */
-    width: 300px; /* Largura fixa do card */
+    height: 300px;
+    width: 350px; /* Largura fixa do card */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra para o card */
 }
 

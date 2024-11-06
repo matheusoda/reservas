@@ -15,6 +15,7 @@ import NotFoundPage from './pages/NotFoundPage.tsx'
 import HomePage from './pages/HomePage.tsx';
 import { AuthProvider, useAuth } from './context/AuthContext.tsx';
 import ConfigurationPage from './pages/Configuration.tsx';
+import RegisterPage from './pages/RegisterPage.tsx';
 
 function RedirectIfLoggedIn({ to }: { to: string }) {
   const { isAuthenticated } = useAuth();
@@ -24,7 +25,7 @@ function RedirectIfLoggedIn({ to }: { to: string }) {
 
 function AdminRoute ({ element }: { element: JSX.Element }) {
   const { isAdmin } = useAuth();
-  console.log(isAdmin)
+
   return isAdmin ? element : <Navigate to="/" />; // Redireciona para a raiz se não for admin
 };
 
@@ -58,6 +59,10 @@ const router = createBrowserRouter([
       {
         path: '/login', // Rota para a página de login
         element: <RedirectIfLoggedIn to="/" />,
+      },
+      {
+        path: '/cadastro', // Rota para a página de login
+        element: <RegisterPage />,
       },
     ]
   },

@@ -6,6 +6,11 @@
     padding: 5px; /* Opcional: adiciona preenchimento */
 }
 
+.configuration-container{
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
 .field {
     margin-bottom: 1.5rem;
 }

@@ -19,6 +19,7 @@ export interface Table {
 export interface Reservation {
     id: number;
     userId: string;
+    userName: string;
     date: Date;
     tableId: number;
 }
