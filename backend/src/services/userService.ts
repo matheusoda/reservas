@@ -42,11 +42,8 @@ export class UserService {
     //  Servico que atualiza dados de um usuario
     static async updateUser(
         id: string,
-        data: { name?: string; email?: string; phone: string; password: string }
+        data: { name?: string; email?: string; phone: string }
     ) {
-        const passwordEncrypted = encrypt(data.password);
-        data.password = passwordEncrypted;
-
         return prisma.user.update({
             where: { id },
             data

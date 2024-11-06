@@ -254,25 +254,46 @@ async function main() {
         }
     ];
 
-    const dataToCreate = menuItems
-        .map((item) => {
+    const dataToCreate = await Promise.all(
+        menuItems.map(async (item) => {
             const category = categoriasDB.find(
                 (cat) => cat.name === item.categoryName
             );
-            return category
-                ? {
-                      name: item.name,
-                      description: item.description,
-                      price: item.price,
-                      categoryId: category.id // categoryId garantido como number
-                  }
-                : null;
-        })
-        .filter((item): item is Exclude<typeof item, null> => item !== null); // Filtra itens não nulos
 
-    await prisma.menu.createMany({
-        data: dataToCreate
-    });
+            if (category) {
+                // Verifica se o item já existe no banco de dados
+                const existingItem = await prisma.menu.findFirst({
+                    where: {
+                        name: item.name,
+                        categoryId: category.id
+                    }
+                });
+
+                if (!existingItem) {
+                    return {
+                        name: item.name,
+                        description: item.description,
+                        price: item.price,
+                        categoryId: category.id
+                    };
+                }
+            }
+            return null;
+        })
+    );
+
+    // Filtra itens não nulos
+    const itemsToCreate = dataToCreate.filter(
+        (item): item is Exclude<typeof item, null> => item !== null
+    );
+
+    if (itemsToCreate.length > 0) {
+        await prisma.menu.createMany({
+            data: itemsToCreate
+        });
+    } else {
+        console.log("Todos os itens já existem no banco de dados.");
+    }
 }
 
 main()

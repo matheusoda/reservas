@@ -70,8 +70,7 @@ export async function updateUser(req: Request, res: Response) {
         const newUser = await UserService.updateUser(id, {
             name,
             email,
-            phone,
-            password
+            phone
         });
         res.status(201).json(newUser);
     } catch (error) {

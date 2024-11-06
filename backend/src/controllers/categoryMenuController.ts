@@ -8,6 +8,7 @@ export async function getCategoryMenus(req: Request, res: Response) {
         const categoryMenus = await CategoryMenuService.getAllCategoryMenu();
         res.json(categoryMenus);
     } catch (error) {
+        console.log(error);
         res.status(400).json({ error: "Error get category menu" });
     }
 }

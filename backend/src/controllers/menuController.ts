@@ -13,7 +13,7 @@ export async function getMenus(req: Request, res: Response) {
 }
 
 export async function createMenu(req: Request, res: Response) {
-    const { name, description, price, categoryId } = req.body;
+    const { name, description, price, category } = req.body;
 
     try {
         const validation = menuSchema.safeParse(req.body);
@@ -38,19 +38,20 @@ export async function createMenu(req: Request, res: Response) {
         const menu = await MenuService.createMenu(
             name,
             description,
-            price,
-            categoryId
+            Number(price),
+            category.id
         );
 
         res.status(201).json(menu);
     } catch (error) {
+        console.log("ERROOOO", error);
         res.status(400).json({ error: "Error creating menu item" });
     }
 }
 
 export async function updateMenu(req: Request, res: Response) {
     const { id } = req.params;
-    const { name, description, price, categoryId } = req.body;
+    const { name, description, price, category } = req.body;
 
     try {
         const validation = menuSchema.safeParse(req.body);
@@ -69,7 +70,7 @@ export async function updateMenu(req: Request, res: Response) {
             name,
             description,
             price,
-            categoryId
+            categoryId: category.id
         });
         res.status(201).json(editedMenu);
     } catch (error) {
@@ -91,8 +92,11 @@ export async function deleteMenu(req: Request, res: Response) {
 }
 
 const menuSchema = z.object({
-    name: z.string().min(5, "O nome precisa ter pelo menos 5 caracteres."),
+    name: z.string().min(3, "O nome precisa ter pelo menos 3 caracteres."),
     description: z.string().optional(),
-    price: z.number(),
-    categoryId: z.number()
+    price: z.string(),
+    category: z.object({
+        id: z.number(),
+        name: z.string()
+    })
 });
