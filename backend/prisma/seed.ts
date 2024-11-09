@@ -1,7 +1,7 @@
 // prisma/seed.ts
 import { PrismaClient } from "@prisma/client";
 import { randomUUID } from "crypto";
-import { encrypt } from "../src/utils";
+import bcrypt from "bcrypt";
 
 const prisma = new PrismaClient();
 
@@ -35,7 +35,7 @@ const users = [
         email: "usuario@mail.com",
         password: "12345678",
         phone: "12312312345",
-        isAdmin: false
+        isAdmin: true
     },
     {
         name: "Usuario1",
@@ -59,7 +59,7 @@ async function main() {
             where: { email: user.email }
         });
 
-        const passwordEncrypted = encrypt(user.password);
+        const hashedPassword = await bcrypt.hash(user.password, 10);
         if (!existingCategory) {
             await prisma.user.create({
                 data: {
@@ -68,7 +68,7 @@ async function main() {
                     email: user.email,
                     phone: user.phone,
                     isAdmin: user.isAdmin,
-                    password: passwordEncrypted
+                    password: hashedPassword
                 }
             });
             console.log(`Categoria '${user.name}' criada.`);

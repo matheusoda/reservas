@@ -1,7 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 
 import { randomUUID } from "crypto";
-import { encrypt } from "../utils";
+import bcrypt from "bcrypt";
 
 const prisma = new PrismaClient();
 
@@ -14,7 +14,7 @@ export class UserService {
         isAdmin: boolean,
         password: string
     ) {
-        const passwordEncrypted = encrypt(password);
+        const hashedPassword = await bcrypt.hash(password, 10);
         const user = await prisma.user.create({
             data: {
                 id: randomUUID(),
@@ -22,7 +22,7 @@ export class UserService {
                 email,
                 phone,
                 isAdmin,
-                password: passwordEncrypted
+                password: hashedPassword
             }
         });
 

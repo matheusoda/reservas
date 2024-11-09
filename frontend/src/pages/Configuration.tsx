@@ -9,6 +9,7 @@ import { Column } from 'primereact/column';
 import './Configuration.css';
 
 export default function ConfigurationPage() {
+    const token = localStorage.getItem('token');
     const [selectedOption, setSelectedOption] = useState<string>(''); // Para selecionar o que editar
     const [id, setId] = useState('');
     const [name, setName] = useState('');
@@ -44,32 +45,72 @@ export default function ConfigurationPage() {
         try {
             if(!id){
                 if (selectedOption === 'user' ) {
-                     response = await axios.post('http://localhost:5000/api/users', userData);
+                     response = await axios.post('http://localhost:5000/api/users', userData, {
+                        headers: {
+                            'Authorization': `Bearer ${token}`,
+                            'Content-Type': 'application/json',
+                        }
+                     });
                     setSuccessMessage('Usuário cadastrado com sucesso!');
                 } else if (selectedOption === 'menu') {
-                     response = await axios.post('http://localhost:5000/api/menus', menuData);
+                     response = await axios.post('http://localhost:5000/api/menus', menuData, {
+                        headers: {
+                            'Authorization': `Bearer ${token}`,
+                            'Content-Type': 'application/json',
+                        }
+                    });
                     setSuccessMessage('Menu cadastrado com sucesso!');
                 } else if (selectedOption === 'category') {
-                     response = await axios.post('http://localhost:5000/api/categoryMenu', categoryData);
+                     response = await axios.post('http://localhost:5000/api/categoryMenu', categoryData, {
+                        headers: {
+                            'Authorization': `Bearer ${token}`,
+                            'Content-Type': 'application/json',
+                        }
+                     });
                     setSuccessMessage('Categoria cadastrada com sucesso!');
                 } else if (selectedOption === 'table') {
                     const tableData = { name };
-                     response = await axios.post('http://localhost:5000/api/tables', tableData);
+                     response = await axios.post('http://localhost:5000/api/tables', tableData, {
+                        headers: {
+                            'Authorization': `Bearer ${token}`,
+                            'Content-Type': 'application/json',
+                        }
+                     });
                     setSuccessMessage('Mesa cadastrada com sucesso!');
                 }
             } else {
                 if (selectedOption === 'user' ) {
-                    response = await axios.put(`http://localhost:5000/api/users/${id}`, userData);
+                    response = await axios.put(`http://localhost:5000/api/users/${id}`, userData, {
+                        headers: {
+                            'Authorization': `Bearer ${token}`,
+                            'Content-Type': 'application/json',
+                        }
+                     });
                    setSuccessMessage('Usuário cadastrado com sucesso!');
                } else if (selectedOption === 'menu') {
-                    response = await axios.put(`http://localhost:5000/api/menus/${id}`, menuData);
+                    response = await axios.put(`http://localhost:5000/api/menus/${id}`, menuData, {
+                        headers: {
+                            'Authorization': `Bearer ${token}`,
+                            'Content-Type': 'application/json',
+                        }
+                     });
                    setSuccessMessage('Menu cadastrado com sucesso!');
                } else if (selectedOption === 'category') {
-                    response = await axios.put(`http://localhost:5000/api/categoryMenu/${id}`, categoryData);
+                    response = await axios.put(`http://localhost:5000/api/categoryMenu/${id}`, categoryData, {
+                        headers: {
+                            'Authorization': `Bearer ${token}`,
+                            'Content-Type': 'application/json',
+                        }
+                     });
                    setSuccessMessage('Categoria cadastrada com sucesso!');
                } else if (selectedOption === 'table') {
                    const tableData = { name };
-                    response = await axios.put(`http://localhost:5000/api/tables/${id}`, tableData);
+                    response = await axios.put(`http://localhost:5000/api/tables/${id}`, tableData, {
+                        headers: {
+                            'Authorization': `Bearer ${token}`,
+                            'Content-Type': 'application/json',
+                        }
+                     });
                    setSuccessMessage('Mesa cadastrada com sucesso!');
                }
             }
@@ -98,7 +139,12 @@ export default function ConfigurationPage() {
 
     const fetchCategories = async () => {
         try {
-            const response = await axios.get('http://localhost:5000/api/categoryMenu');
+            const response = await axios.get('http://localhost:5000/api/categoryMenu', {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json',
+                }
+             });
             setCategories(response.data);
         } catch (error) {
             console.error('Erro ao buscar categorias:', error);
@@ -107,7 +153,12 @@ export default function ConfigurationPage() {
 
     const fetchMenuItems = async () => {
         try {
-            const response = await axios.get('http://localhost:5000/api/menus');
+            const response = await axios.get('http://localhost:5000/api/menus', {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json',
+                }
+             });
             setMenuItems(response.data);
         } catch (error) {
             console.error('Erro ao buscar itens do menu:', error);
@@ -116,7 +167,12 @@ export default function ConfigurationPage() {
 
     const fetchTables = async () => {
         try {
-            const response = await axios.get('http://localhost:5000/api/tables');
+            const response = await axios.get('http://localhost:5000/api/tables', {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json',
+                }
+             });
             setTables(response.data);
         } catch (error) {
             console.error('Erro ao buscar mesas:', error);
@@ -125,7 +181,12 @@ export default function ConfigurationPage() {
 
     const fetchUsers = async () => {
         try {
-            const response = await axios.get('http://localhost:5000/api/users');
+            const response = await axios.get('http://localhost:5000/api/users', {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json',
+                }
+             });
             setUsers(response.data);
         } catch (error) {
             console.error('Erro ao buscar usuários:', error);

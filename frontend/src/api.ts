@@ -6,6 +6,24 @@ const api = axios.create({
     baseURL: "http://localhost:5000/api"
 });
 
+// Adiciona o interceptor para incluir o token em todas as requisições
+api.interceptors.request.use(
+    (config) => {
+        // Tenta pegar o token do localStorage (ou outro armazenamento)
+        const token = localStorage.getItem("token");
+
+        // Se o token estiver presente, adiciona no cabeçalho da requisição
+        if (token) {
+            config.headers["Authorization"] = `Bearer ${token}`;
+        }
+
+        return config;
+    },
+    (error) => {
+        return Promise.reject(error);
+    }
+);
+
 // Função para buscar categorias
 export const fetchCategories = async () => {
     const response = await api.get("/categoryMenu");

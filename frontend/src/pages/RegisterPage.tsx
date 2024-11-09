@@ -6,6 +6,7 @@ import { Card } from 'primereact/card';
 import './RegisterPage.css'; // Estilo para a página de registro
 
 export default function RegisterPage() {
+    const token = localStorage.getItem('token');
     const [email, setEmail] = useState('');
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
@@ -19,7 +20,12 @@ export default function RegisterPage() {
                 email,
                 username,
                 password,
-            });
+            }, {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json',
+                }
+             });
             setSuccessMessage('Usuário registrado com sucesso!');
             setErrorMessage(''); // Limpa a mensagem de erro
         } catch (error) {

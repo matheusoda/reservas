@@ -44,7 +44,7 @@ export async function createMenu(req: Request, res: Response) {
 
         res.status(201).json(menu);
     } catch (error) {
-        console.log("ERROOOO", error);
+        console.log("ERRO", error);
         res.status(400).json({ error: "Error creating menu item" });
     }
 }

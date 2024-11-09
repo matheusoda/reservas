@@ -12,6 +12,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
 export default function  ReservationForm() {
+    const token = localStorage.getItem('token');
     const navigate = useNavigate();
     const { userId } = useAuth();
     const [date, setDate] = useState<Date | null>(null);
@@ -59,9 +60,10 @@ export default function  ReservationForm() {
             try {
                 const response = await axios.post('http://localhost:5000/api/reservations', reservationData, {
                     headers: {
+                        'Authorization': `Bearer ${token}`,
                         'Content-Type': 'application/json',
-                    },
-                });
+                    }
+                 });
 
                 if (response.status !== 201) {
                     throw new Error('Erro ao criar reserva');

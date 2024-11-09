@@ -6,6 +6,7 @@ import { Reservation } from '../types';
 import { useAuth } from '../context/AuthContext';
 
 export default function Home() {
+    const token = localStorage.getItem('token');
     const [reservations, setReservations] = useState([]);
     const [loading, setLoading] = useState(true);
     const { userId } = useAuth();
@@ -14,7 +15,12 @@ export default function Home() {
         const fetchReservations = async () => {
             setLoading(true);
             try {
-                const response = await axios.get(`http://localhost:5000/api/reservations/user/${userId}`);
+                const response = await axios.get(`http://localhost:5000/api/reservations/user/${userId}`, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json',
+                    }
+                 });
                 setReservations(response.data);
             } catch (error) {
                 console.error('Erro ao buscar reservas:', error);
