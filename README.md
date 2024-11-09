@@ -15,8 +15,6 @@ Este é um projeto fullstack que usa **React** no front-end, **Node.js** com **T
 
 ## Sobre o Projeto
 
-Descreva brevemente o objetivo do seu projeto. Explique o que ele faz e o que o torna útil. Exemplo:
-
 > Este projeto visa gerenciar reservas e o cardápio de um restaurante, oferecendo uma interface interativa para os usuários realizarem reservas de mesas e personalizarem pedidos.
 
 ## Tecnologias Utilizadas
@@ -49,7 +47,7 @@ cd reservas
 Criar arquivo .env na pasta backend, e nela colocar as seguintes variáveis com os dados correspondentes.
 
 ```bash
-DATABASE_URL="postgresql://postgres:password@db:5432/meubanco"
+DATABASE_URL="postgresql://postgres:postgres@db:5432/reservedb"
 PORT=5000
 JWT_SECRET="a244262e7e94c78fe911322cacde31da36ba10bb7cdd9d13c469fe9e3f6a56cc"
 ```
@@ -93,11 +91,11 @@ Back-end: http://localhost:5000
 ```bash
 reservas/
 │
-├── client/              # Código do front-end em React
+├── frontend/              # Código do front-end em React
 │   ├── src/
 │   └── public/
 │
-├── server/              # Código do back-end em Node.js e Prisma
+├── backend/              # Código do back-end em Node.js e Prisma
 │   ├── src/
 │   ├── prisma/
 │   └── migrations/
